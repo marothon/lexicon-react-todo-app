@@ -8,9 +8,8 @@ function App() {
 
   const createTodo = (newTodo: string) => {
     if(newTodo){
-      todoList.push(newTodo);
-      setTodoList(todoList);
-      setTodoCount(todoList.length);
+      setTodoList((previousTodo) => [...previousTodo, newTodo]);
+      setTodoCount(todoList.length+1);
     }
   }
 
