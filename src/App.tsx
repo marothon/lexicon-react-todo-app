@@ -1,35 +1,39 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todoCount, setTodoCount] = useState(0);
+  const [todoList, setTodoList] = useState<Array<string>>([]);
+
+
+  const createTodo = (newTodo: string) => {
+    if(newTodo){
+      todoList.push(newTodo);
+      setTodoList(todoList);
+      setTodoCount(todoList.length);
+    }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>{todoCount > 0 ? todoCount : null} TODO{todoCount > 0 ? 'S' : null}</h1>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        let nextTodo = e.currentTarget.todo.value;
+        e.currentTarget.todo.value = null;
+        createTodo(nextTodo);
+      }}>
+        <input placeholder="Enter new todo" type="text" id="todo" name="todo"></input>
+      </form>
+      <ul>
+        {todoList.map( (todo, i) => 
+          (<li key={i}>{todo}</li>)
+        )}
+      </ul>
     </>
   )
 }
+
+
 
 export default App
