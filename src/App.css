@@ -14,6 +14,12 @@ ul {
   padding: 0;
 }
 
+.todo-form{
+  button{
+    margin-left: 1rem;
+  }
+}
+
 .todo-list {
 
   .todo{
