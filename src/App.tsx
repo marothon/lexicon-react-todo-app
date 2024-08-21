@@ -1,23 +1,23 @@
 import { useState } from 'react'
 import './App.css'
+import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
   const [todoCount, setTodoCount] = useState(0);
-  const [todoList, setTodoList] = useState<Array<string>>([]);
+  const [todoList, setTodoList] = useState<Array<Todo>>([]);
 
 
-  const createTodo = (newTodo: string) => {
-    if(newTodo){
+  const createTodo = (desc: string) => {
+    if(desc){
+      const newTodo: Todo = {id: uuidv4(), desc: desc};
       setTodoList((previousTodo) => [...previousTodo, newTodo]);
       setTodoCount(todoList.length+1);
     }
   }
 
-  const removeTodo = (index: number) => {
+  const removeTodo = (id: string) => {
     setTodoList((previousTodo) => {
-      let todos = [...previousTodo];
-      todos.splice(index, 1);
-      return todos;
+      return previousTodo.filter( todo => todo.id !== id);
     });
     setTodoCount(todoCount-1);
   }
@@ -35,25 +35,30 @@ export default function App() {
       </form>
       <ul className='todo-list'>
         {todoList.map( (todo, i) => 
-          (<TodoItem key={i} index={i} todo={todo} removeTodo={removeTodo}/>)
+          (<TodoItem key={todo.id} id={todo.id} todo={todo.desc} removeTodo={removeTodo}/>)
         )}
       </ul>
     </>
   )
 }
 
+type Todo = {
+  id: string,
+  desc: string
+}
+
 interface TodoProps {
-  index: number,
+  id: string,
   todo: string,
   removeTodo: Function
 }
 
-function TodoItem({index, todo, removeTodo}:TodoProps){
+function TodoItem({id, todo, removeTodo}:TodoProps){
   const [completed, setCompleted] = useState<boolean>(false);
   return (
       <li className="todo">
         <input type="checkbox" onClick={()=>{setCompleted(!completed)}}/>
-        <button type="button" onClick={()=>{removeTodo(index)}}>Remove</button>
+        <button type="button" onClick={()=>{removeTodo(id)}}>Remove</button>
         <p className={['text', completed ? 'complete' : ''].join(' ')}>{todo}</p>
       </li>
   )
