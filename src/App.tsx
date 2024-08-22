@@ -32,11 +32,9 @@ export default function App() {
   }
 
   const clearCompletedTodos = () => {
-    let completedTodos = todoList.filter( todo => todo.completed);
     setTodoList((previousTodo) => {
       return previousTodo.filter( todo => !todo.completed);
     });
-    setTodoCount(todoCount-completedTodos.length);
   }
 
   return (
