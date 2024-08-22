@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import { v4 as uuidv4 } from 'uuid';
+import TodoItem from './components/todo-item';
+import { Todo } from './types/todo';
 
 export default function App() {
   const [todoCount, setTodoCount] = useState(0);
@@ -63,32 +65,3 @@ export default function App() {
   )
 }
 
-type Todo = {
-  id: string,
-  desc: string,
-  completed: boolean
-}
-
-interface TodoProps {
-  todo: Todo,
-  removeTodo: Function,
-  propogateCompletedTodo: Function
-}
-
-function TodoItem({todo, removeTodo, propogateCompletedTodo}: TodoProps){
-  const [completed, setCompleted] = useState<boolean>(todo.completed);
-
-  const handleCompleteTodo = () => {
-    setCompleted(!completed);
-    todo.completed = !todo.completed;
-    propogateCompletedTodo(todo);
-  }
-
-  return (
-      <li className="todo">
-        <input type="checkbox" onClick={handleCompleteTodo}/>
-        <button type="button" onClick={()=>{removeTodo(todo)}}>Remove</button>
-        <p className={['text', completed ? 'complete' : ''].join(' ')}>{todo.desc}</p>
-      </li>
-  )
-}
