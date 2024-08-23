@@ -50,7 +50,7 @@ export default function App() {
         <button type="button" onClick={clearCompletedTodos}>Clear completed</button>
       </form>
       <ul className='todo-list'>
-        {todoList.map( (todo, i) => 
+        {todoList.map( (todo) => 
           (<TodoItem 
               key={todo.id}
               todo={todo}
