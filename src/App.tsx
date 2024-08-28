@@ -4,6 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 import TodoItem from './components/todo-item';
 import { Todo } from './types/todo';
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+function App() {
+  const [count, setCount] = useState(0)
+=======
+>>>>>>> Stashed changes
 export default function App() {
   const [todoCount, setTodoCount] = useState(0);
   const [todoList, setTodoList] = useState<Array<Todo>>([]);
@@ -13,7 +20,11 @@ export default function App() {
     if(desc){
       const newTodo: Todo = {id: uuidv4(), desc: desc, completed: false};
       setTodoList((previousTodo) => [...previousTodo, newTodo]);
+<<<<<<< Updated upstream
       setTodoCount(todoList.length+1);
+=======
+      setTodoCount(tc => tc+1);
+>>>>>>> Stashed changes
     }
   }
 
@@ -36,6 +47,10 @@ export default function App() {
       return previousTodo.filter( todo => !todo.completed);
     });
   }
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
   return (
     <>
